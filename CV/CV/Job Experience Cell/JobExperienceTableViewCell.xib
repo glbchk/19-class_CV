@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,26 +16,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MD8-h6-7B2">
-                        <rect key="frame" x="15" y="11" width="100" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MD8-h6-7B2">
+                        <rect key="frame" x="15" y="11" width="70" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="9V6-EP-bEF"/>
+                            <constraint firstAttribute="width" constant="70" id="aUl-q9-7t6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n8R-S1-OBr">
+                        <rect key="frame" x="97" y="11" width="70" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="dng-fp-NdY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="6vh-DP-sPK">
-                        <rect key="frame" x="123" y="0.0" width="237" height="44"/>
+                        <rect key="frame" x="185" y="0.0" width="175" height="44"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yqa-Xq-Ml9">
-                                <rect key="frame" x="0.0" y="0.0" width="237" height="21.666666666666668"/>
+                                <rect key="frame" x="0.0" y="0.0" width="175" height="21.666666666666668"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78u-Y5-buu">
-                                <rect key="frame" x="0.0" y="23.666666666666671" width="237" height="20.333333333333329"/>
+                                <rect key="frame" x="0.0" y="23.666666666666671" width="175" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,10 +62,13 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6vh-DP-sPK" firstAttribute="leading" secondItem="MD8-h6-7B2" secondAttribute="trailing" constant="8" id="73I-HT-IRz"/>
+                    <constraint firstItem="n8R-S1-OBr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="3Rb-Xx-1tY"/>
                     <constraint firstItem="MD8-h6-7B2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Fe9-5i-SLV"/>
                     <constraint firstItem="MD8-h6-7B2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="IAH-dS-edx"/>
                     <constraint firstAttribute="bottom" secondItem="6vh-DP-sPK" secondAttribute="bottom" id="JYK-1r-kBK"/>
+                    <constraint firstItem="n8R-S1-OBr" firstAttribute="leading" secondItem="MD8-h6-7B2" secondAttribute="trailing" constant="12" id="QFT-M6-3O2"/>
+                    <constraint firstAttribute="bottom" secondItem="n8R-S1-OBr" secondAttribute="bottom" constant="12" id="U9T-XB-arZ"/>
+                    <constraint firstItem="6vh-DP-sPK" firstAttribute="leading" secondItem="n8R-S1-OBr" secondAttribute="trailing" constant="18" id="Xra-9a-Ztb"/>
                     <constraint firstAttribute="bottom" secondItem="MD8-h6-7B2" secondAttribute="bottom" constant="12" id="icI-f5-8ya"/>
                     <constraint firstItem="6vh-DP-sPK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="lJl-bf-smK"/>
                     <constraint firstAttribute="trailing" secondItem="6vh-DP-sPK" secondAttribute="trailing" constant="15" id="tau-Pi-Plo"/>
@@ -65,8 +77,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="companyNameExperienceLabel" destination="yqa-Xq-Ml9" id="08l-T2-0tS"/>
-                <outlet property="dateExperienceLabel" destination="MD8-h6-7B2" id="qoY-ll-Nhz"/>
+                <outlet property="endDateExperienceLabel" destination="n8R-S1-OBr" id="dhJ-Vf-Cx8"/>
                 <outlet property="positionNameExperienceLabel" destination="78u-Y5-buu" id="yOJ-ap-ncW"/>
+                <outlet property="startDateExperienceLabel" destination="MD8-h6-7B2" id="1Ef-P1-ZAa"/>
             </connections>
             <point key="canvasLocation" x="130.76923076923077" y="-11.374407582938389"/>
         </tableViewCell>
