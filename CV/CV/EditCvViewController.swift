@@ -11,18 +11,20 @@ class EditCVViewController: UIViewController {
 
 	@IBOutlet weak var firstNameTextField: UITextField!
 	@IBOutlet weak var lastNameTextField: UITextField!
+	@IBOutlet weak var userImage: UIImageView!
 
 
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
 	@IBAction func addPicture(_ sender: Any) {
+		//No idea how to do
 	}
 
 	@IBAction func removePicture(_ sender: Any) {
+		//Connected to adding image
 	}
 
 	@IBAction func saveUserData(_ sender: Any) {

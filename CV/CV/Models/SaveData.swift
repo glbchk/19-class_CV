@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
-let jobExperience = JobExp(startDate: "", endDate: "", companyName: "", positionName: "")
+struct Experience: Codable {
+	var startDate: String
+	var endDate: String
+	var companyName: String
+	var positionName: String
+}
 
-UserDefaults.set(true, forKey: "jobExperience")
+struct Skills {
+	var skillsName: String
+}

@@ -22,9 +22,8 @@ class JobExperienceTableViewCell: UITableViewCell {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		let margins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		let margins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		contentView.frame = contentView.frame.inset(by: margins)
-		contentView.layer.cornerRadius = 8
 	}
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -33,7 +32,7 @@ class JobExperienceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-	func addData(experience: JobExp) {
+	func addData(experience: Experience) {
 		startDateExperienceLabel.text = experience.startDate
 		endDateExperienceLabel.text = experience.endDate
 		companyNameExperienceLabel.text = experience.companyName

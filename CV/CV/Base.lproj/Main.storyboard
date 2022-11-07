@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Xaz-dY-9sp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Xaz-dY-9sp">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,13 +44,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Sz-jk-hDl">
                                         <rect key="frame" x="15" y="128.33333333333334" width="360" height="21.666666666666657"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLy-Qe-cpu">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLy-Qe-cpu">
                                                 <rect key="frame" x="0.0" y="0.0" width="175" height="21.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euG-fg-Pn7">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euG-fg-Pn7">
                                                 <rect key="frame" x="185" y="0.0" width="175" height="21.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <nil key="textColor"/>
@@ -81,15 +81,15 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job experience" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWS-0Y-qNA">
-                                        <rect key="frame" x="84" y="21" width="204" height="21"/>
+                                        <rect key="frame" x="84" y="21" width="194" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xx-r7-UdL">
-                                        <rect key="frame" x="303" y="14" width="72" height="35"/>
+                                        <rect key="frame" x="293" y="14" width="82" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="72" id="yir-Mc-NeD"/>
+                                            <constraint firstAttribute="width" secondItem="4xx-r7-UdL" secondAttribute="height" multiplier="82:35" id="jJP-xv-0B1"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Add"/>
@@ -135,7 +135,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdp-ed-Tva">
                                         <rect key="frame" x="293" y="14" width="82" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="82" id="PYV-GG-2bL"/>
+                                            <constraint firstAttribute="width" secondItem="Pdp-ed-Tva" secondAttribute="height" multiplier="82:35" id="XvO-5R-7fG"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Add"/>
@@ -202,6 +202,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addJobExpButton" destination="4xx-r7-UdL" id="kLg-K6-rBT"/>
                         <outlet property="cvFirstNameLabel" destination="PLy-Qe-cpu" id="ohL-xR-ZqM"/>
                         <outlet property="cvImage" destination="iEO-UZ-HOi" id="riU-7g-2Oa"/>
                         <outlet property="cvLastNameLabel" destination="euG-fg-Pn7" id="h9U-J6-vG7"/>
@@ -328,8 +329,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Edit CV" id="akz-mm-HPM"/>
                     <connections>
+                        <outlet property="addImage" destination="vub-5z-GdP" id="sgg-3r-MJ0"/>
                         <outlet property="firstNameTextField" destination="5gP-6x-rrg" id="GUd-Uh-jR3"/>
                         <outlet property="lastNameTextField" destination="DUv-TZ-Rhp" id="6sD-uh-evt"/>
+                        <outlet property="userImage" destination="w12-XP-a2V" id="aYp-DM-u70"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xPX-y7-eei" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

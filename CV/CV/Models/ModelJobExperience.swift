@@ -14,3 +14,7 @@ struct JobExp {
 	var companyName: String
 	var positionName: String
 }
+
+
+
+
