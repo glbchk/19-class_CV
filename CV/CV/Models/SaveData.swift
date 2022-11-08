@@ -17,4 +17,5 @@ struct Experience: Codable {
 
 struct Skills {
 	var skillsName: String
+	var rating: Int
 }

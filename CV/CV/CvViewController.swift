@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CvViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class CvViewController: UIViewController, UINavigationControllerDelegate, UICollectionViewDelegate {
 
 	@IBOutlet weak var cvImage: UIImageView!
 	@IBOutlet weak var cvFirstNameLabel: UILabel!
@@ -26,6 +26,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIImag
 	var positionNameTextField: UITextField!
 
 	var skillTextField: UITextField!
+	var ratingSkillTextField: UITextField!
 
 	var allJobExp = [Experience]()
 	var allSkills = [Skills]()
@@ -39,10 +40,18 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIImag
 		jobExperienceTableView.delegate = self
 		jobExperienceTableView.dataSource = self
 
+		skillsCollectionView.delegate = self
+		skillsCollectionView.dataSource = self
+
 		jobExperienceTableView.register(
 			UINib(nibName: "JobExperienceTableViewCell", bundle: nil),
 			forCellReuseIdentifier: "JobExperienceTableViewCell"
 			)
+
+		skillsCollectionView.register(UINib(nibName: "SkillsCollectionViewCell", bundle: nil),
+									  forCellWithReuseIdentifier: "SkillCustomCell")
+
+
 	}
 
 	private func getData() {
@@ -169,9 +178,14 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIImag
 				textField.placeholder = "Write your skill"
 			}
 
+			alert.addTextField { (textField) in
+				self.ratingSkillTextField = textField
+				textField.placeholder = "Set your rate for askill"
+			}
+
 			let actionAdd = UIAlertAction(title: "Save skill", style: .default) {
 				UIAlertAction in
-				let savedData = Skills(skillsName: self.skillTextField.text ?? "")
+				let savedData = Skills(skillsName: self.skillTextField.text ?? "", rating: Int(self.ratingSkillTextField.text!)!)
 				self.allSkills.append(savedData)
 
 				self.skillsCollectionView.reloadData()
@@ -197,7 +211,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIImag
 }
 
 extension CvViewController: UITableViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
+		CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height)
+	}
 }
 
 extension CvViewController: UITableViewDataSource {

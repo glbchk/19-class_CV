@@ -9,6 +9,8 @@ import UIKit
 
 class SkillsCollectionViewCell: UICollectionViewCell {
 
+	@IBOutlet var ratingImages: [UIImageView]!
+
 	@IBOutlet weak var skillsImage: UIImageView!
 	@IBOutlet weak var skillsNameLabel: UILabel!
 
@@ -17,14 +19,23 @@ class SkillsCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
-	override func layoutSubviews() {
-		super.layoutSubviews()
-
-		let margins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-		contentView.frame = contentView.frame.inset(by: margins)
-	}
-
 	func addData(skills: Skills) {
 		skillsNameLabel.text = skills.skillsName
+
+		switch skills.rating {
+		case 1:
+			ratingImages[0].image = UIImage(systemName: "star.fill")
+			ratingImages[1].image = UIImage(systemName: "star")
+			ratingImages[2].image = UIImage(systemName: "star")
+		case 2:
+			ratingImages[0].image = UIImage(systemName: "star.fill")
+			ratingImages[1].image = UIImage(systemName: "star.fill")
+			ratingImages[2].image = UIImage(systemName: "star")
+		case 3:
+			ratingImages[0].image = UIImage(systemName: "star.fill")
+			ratingImages[1].image = UIImage(systemName: "star.fill")
+			ratingImages[2].image = UIImage(systemName: "star.fill")
+		default: break
+		}
 	}
 }
