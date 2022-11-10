@@ -21,6 +21,7 @@ class SkillsCollectionViewCell: UICollectionViewCell {
 
 	func addData(skills: Skills) {
 		skillsNameLabel.text = skills.skillsName
+		skillsImage.image = UIImage(named: skills.skillsName)
 
 		switch skills.rating {
 		case 1:

@@ -16,6 +16,7 @@
 		AA033C002910BA9E0026A12C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA033BFE2910BA9E0026A12C /* LaunchScreen.storyboard */; };
 		AA27D3BD29136E2000FA866B /* ModelJobExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27D3BC29136E2000FA866B /* ModelJobExperience.swift */; };
 		AA27D3BF29137B1F00FA866B /* SaveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA27D3BE29137B1F00FA866B /* SaveData.swift */; };
+		AA53791E291C9CDA003B1AF0 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA53791D291C9CDA003B1AF0 /* FileManager.swift */; };
 		AA63772C291219A700F61F94 /* EditCvViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA63772B291219A700F61F94 /* EditCvViewController.swift */; };
 		AA63773129121F8D00F61F94 /* JobExperienceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA63772F29121F8D00F61F94 /* JobExperienceTableViewCell.swift */; };
 		AA63773229121F8D00F61F94 /* JobExperienceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA63773029121F8D00F61F94 /* JobExperienceTableViewCell.xib */; };
@@ -35,6 +36,7 @@
 		AA033C012910BA9E0026A12C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA27D3BC29136E2000FA866B /* ModelJobExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelJobExperience.swift; sourceTree = "<group>"; };
 		AA27D3BE29137B1F00FA866B /* SaveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveData.swift; sourceTree = "<group>"; };
+		AA53791D291C9CDA003B1AF0 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA63772B291219A700F61F94 /* EditCvViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCvViewController.swift; sourceTree = "<group>"; };
 		AA63772F29121F8D00F61F94 /* JobExperienceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobExperienceTableViewCell.swift; sourceTree = "<group>"; };
 		AA63773029121F8D00F61F94 /* JobExperienceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobExperienceTableViewCell.xib; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				AA27D3BC29136E2000FA866B /* ModelJobExperience.swift */,
 				AA27D3BE29137B1F00FA866B /* SaveData.swift */,
+				AA53791D291C9CDA003B1AF0 /* FileManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				AA27D3BD29136E2000FA866B /* ModelJobExperience.swift in Sources */,
 				AA033BF52910BA9C0026A12C /* CvViewController.swift in Sources */,
 				AA27D3BF29137B1F00FA866B /* SaveData.swift in Sources */,
+				AA53791E291C9CDA003B1AF0 /* FileManager.swift in Sources */,
 				AA033BF12910BA9C0026A12C /* AppDelegate.swift in Sources */,
 				AA63772C291219A700F61F94 /* EditCvViewController.swift in Sources */,
 				AA63773129121F8D00F61F94 /* JobExperienceTableViewCell.swift in Sources */,

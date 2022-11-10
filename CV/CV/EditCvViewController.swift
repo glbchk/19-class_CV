@@ -19,13 +19,13 @@ class EditCVViewController: UIViewController {
 
     }
     
-	@IBAction func addPicture(_ sender: Any) {
-		//No idea how to do
-	}
-
-	@IBAction func removePicture(_ sender: Any) {
-		//Connected to adding image
-	}
+//	@IBAction func addPicture(_ sender: Any) {
+//		//No idea how to do
+//	}
+//
+//	@IBAction func removePicture(_ sender: Any) {
+//		//Connected to adding image
+//	}
 
 	@IBAction func saveUserData(_ sender: Any) {
 		guard let vc = storyboard?.instantiateViewController(withIdentifier: "CvViewController") as? CvViewController else { return }

@@ -27,10 +27,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	var skillTextField: UITextField!
 	var ratingSkillTextField: UITextField!
+	var skillImage: UIImage!
 
 	var allJobExp = [Experience]()
 	var allSkills = [Skills]()
-	var skillsImages = [UIImage]()
 
 //	var didSaveButtonTapped: ((String) -> Void)?
 
@@ -48,8 +48,9 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 			forCellReuseIdentifier: "JobExperienceTableViewCell"
 			)
 
+		skillsCollectionView.register(SkillsCollectionViewCell.self, forCellWithReuseIdentifier: "SkillsCustomCell")
 		skillsCollectionView.register(UINib(nibName: "SkillsCollectionViewCell", bundle: nil),
-									  forCellWithReuseIdentifier: "SkillCustomCell")
+									  forCellWithReuseIdentifier: "SkillsCustomCell")
 
 
 	}
@@ -111,10 +112,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				let savedData = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
 				allJobExp.append(savedData)
 
-				if let encoded = try? encoder.encode(self.allJobExp) {
-					let defaults = UserDefaults.standard
-					defaults.set(encoded, forKey: "jobExp")
-				}
+//				if let encoded = try? encoder.encode(self.allJobExp) {
+//					let defaults = UserDefaults.standard
+//					defaults.set(encoded, forKey: "jobExp")
+//				}
 
 //				if let savedProperty = UserDefaults.standard.object(forKey: "startDate") as? Data {
 //					if let loadedProperty = try? decoder.decode([Experience].self, from: savedProperty) {
@@ -133,10 +134,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				let savedData = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
 				allJobExp.append(savedData)
 
-				if let encoded = try? encoder.encode(self.allJobExp) {
-					let defaults = UserDefaults.standard
-					defaults.set(encoded, forKey: "jobExp")
-				}
+//				if let encoded = try? encoder.encode(self.allJobExp) {
+//					let defaults = UserDefaults.standard
+//					defaults.set(encoded, forKey: "jobExp")
+//				}
 
 				jobExperienceTableView.reloadData()
 				self.present(alert, animated: true, completion: nil)
@@ -156,7 +157,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	@IBAction func addSkills(_ sender: Any) {
 
 		let title = "Add your skill!"
-		let message = "Here you can write one of your skills that will appear on the screen."
+		let message = "Here you can write one of your skills and set the rate of your skill from 1-3."
 
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
@@ -175,16 +176,34 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 			alert.addTextField { (textField) in
 				self.skillTextField = textField
+				self.skillTextField.text = self.skillTextField.text?.lowercased()
+
+				if let image = UIImage(named: self.skillTextField.text ?? "") {
+					self.skillImage = image
+				}
 				textField.placeholder = "Write your skill"
 			}
+		
+
 
 			alert.addTextField { (textField) in
 				self.ratingSkillTextField = textField
 				textField.placeholder = "Set your rate for askill"
+
+				if textField.text != "1" || textField.text != "2" || textField.text != "3" {
+					for action in alert.actions {
+							action.isEnabled = false
+					}
+
+				} else {
+					alert.actions.forEach { action in
+						action.isEnabled = true
+					}
+				}
 			}
 
 			let actionAdd = UIAlertAction(title: "Save skill", style: .default) {
-				UIAlertAction in
+				(action: UIAlertAction!) -> Void in
 				let savedData = Skills(skillsName: self.skillTextField.text ?? "", rating: Int(self.ratingSkillTextField.text!)!)
 				self.allSkills.append(savedData)
 
@@ -255,7 +274,7 @@ extension CvViewController: UITableViewDataSource {
 extension CvViewController: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		1
+		return allSkills.count
 	}
 
 
@@ -265,7 +284,7 @@ extension CvViewController: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let collectionCell = collectionView.dequeueReusableCell(
-			withReuseIdentifier: "SkillsCollectionViewCell",
+			withReuseIdentifier: "SkillsCustomCell",
 			for: indexPath
 		) as? SkillsCollectionViewCell else {
 			return UICollectionViewListCell()
@@ -282,27 +301,27 @@ extension CvViewController: UICollectionViewDataSource {
 
 extension CvViewController {
 
-	func setProperties() {
-		let encoder = JSONEncoder()
-		if let encoded = try? encoder.encode(self.allJobExp) {
-			let defaults = UserDefaults.standard
-			defaults.set(encoded, forKey: "jobExp")
+//	func setProperties() {
+//		let encoder = JSONEncoder()
+//		if let encoded = try? encoder.encode(self.allJobExp) {
+//			let defaults = UserDefaults.standard
+//			defaults.set(encoded, forKey: "jobExp")
+//
+//		}
+//
+//	}
 
-		}
-
-	}
-
-	func retrieveProperties() {
-		if let savedProperty = UserDefaults.standard.object(forKey: "startDate") as? Data {
-			let decoder = JSONDecoder()
-			if let loadedProperty = try? decoder.decode([Experience].self, from: savedProperty) {
-				for property in loadedProperty {
-					print(property.startDate ?? "")
-				}
-			}
-			UserDefaults.standard.synchronize()
-		}
-	}
+//	func retrieveProperties() {
+//		if let savedProperty = UserDefaults.standard.object(forKey: "startDate") as? Data {
+//			let decoder = JSONDecoder()
+//			if let loadedProperty = try? decoder.decode([Experience].self, from: savedProperty) {
+//				for property in loadedProperty {
+//					print(property.startDate ?? "")
+//				}
+//			}
+//			UserDefaults.standard.synchronize()
+//		}
+//	}
 
 //	func removeProperties() -> String {
 //
