@@ -52,13 +52,45 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		skillsCollectionView.register(UINib(nibName: "SkillsCollectionViewCell", bundle: nil),
 									  forCellWithReuseIdentifier: "SkillsCustomCell")
 
+		setData()
 
 	}
 
-	private func getData() {
-//		SetData.shared.data = [
-//			JobExp(startDate: <#T##String#>, endDate: <#T##String#>, companyName: <#T##String#>, positionName: <#T##String#>
-//		]
+	private func setData() {
+		if let savedJobExp = UserDefaults.standard.object(forKey: "jobExp") as? Data {
+			if let loadedJobExp = try? decoder.decode([Experience].self, from: savedJobExp) {
+				for exp in loadedJobExp {
+					allJobExp.append(exp)
+				}
+				jobExperienceTableView.reloadData()
+			}
+		}
+
+//		if let savedSkill = UserDefaults.standard.object(forKey: "jobSkill") as? Data {
+//			if let loadedSkill = try? decoder.decode([Skills].self, from: savedSkill) {
+//				for skill in loadedSkill {
+//					allSkills.append(skill)
+//				}
+//				skillsCollectionView.reloadData()
+//			}
+//		}
+
+		guard let vc = storyboard?.instantiateViewController(withIdentifier: "EditCvViewController") as? EditCvViewController else { return }
+
+		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
+						if let loadedUserInfo = try? decoder.decode([InfoUser].self, from: savedUser) {
+							for info in loadedUserInfo {
+								vc.cvUserInfo.append(info)
+							}
+						}
+
+						cvImage.layer.masksToBounds = false
+						cvImage.layer.cornerRadius = cvImage.frame.height/2
+						cvImage.clipsToBounds = true
+			
+						loadView()
+					}
+
 	}
 
 	@IBAction func addPorfileData(_ sender: Any) {
@@ -71,19 +103,6 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-		if cvFirstNameLabel.text == "First name" || cvLastNameLabel.text == "Last name" {
-			addJobExpButton.isEnabled = false
-
-			let actionUnderstood = UIAlertAction(title: "Understood", style: .destructive) {_ in
-				self.addJobExpButton.isEnabled = true
-			}
-
-			alert.addAction(actionUnderstood)
-
-			present(alert, animated: true, completion: nil)
-
-		} else {
-
 			alert.addTextField { (textField) in
 				self.startDateTextField = textField
 				textField.placeholder = "The beginning year of experience"
@@ -92,19 +111,16 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 			alert.addTextField { (textField) in
 				self.endDateTextField = textField
 				textField.placeholder = "The finishing year of experience"
-				//			SetData.shared.data.append(JobExp(endDate: textField.text))
 			}
 
 			alert.addTextField { (textField) in
 				self.companyNameTextField = textField
 				textField.placeholder = "Company name"
-				//			SetData.shared.data.append(JobExp(companyName: textField.text))
 			}
 
 			alert.addTextField { (textField) in
 				self.positionNameTextField = textField
 				textField.placeholder = "Position name"
-				//			SetData.shared.data.append(JobExp(positionName: textField.text))
 			}
 
 			let actionAdd = UIAlertAction(title: "Save experience", style: .default) { [self]
@@ -112,35 +128,32 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				let savedData = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
 				allJobExp.append(savedData)
 
-//				if let encoded = try? encoder.encode(self.allJobExp) {
-//					let defaults = UserDefaults.standard
-//					defaults.set(encoded, forKey: "jobExp")
-//				}
+				if let encoded = try? encoder.encode(allJobExp) {
+					let defaults = UserDefaults.standard
+					defaults.set(encoded, forKey: "jobExp")
+				}
 
-//				if let savedProperty = UserDefaults.standard.object(forKey: "startDate") as? Data {
-//					if let loadedProperty = try? decoder.decode([Experience].self, from: savedProperty) {
-//						for property in loadedProperty {
-//							print(property.startDate ?? "")
-//						}
-//					}
-//					UserDefaults.standard.synchronize()
-//				}
+				UserDefaults.standard.synchronize()
 
 				jobExperienceTableView.reloadData()
 			}
 
-			let actionSaveAndAddMore = UIAlertAction(title: "Save and More experience", style: .default) { [self]
+			let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more experience", style: .default) { [self]
 				(action: UIAlertAction!) -> Void in
-				let savedData = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
-				allJobExp.append(savedData)
+				let savedExp = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
+				allJobExp.append(savedExp)
 
-//				if let encoded = try? encoder.encode(self.allJobExp) {
-//					let defaults = UserDefaults.standard
-//					defaults.set(encoded, forKey: "jobExp")
-//				}
+				if let encoded = try? encoder.encode(allJobExp) {
+					let defaults = UserDefaults.standard
+					defaults.set(encoded, forKey: "jobExp")
+				}
 
 				jobExperienceTableView.reloadData()
-				self.present(alert, animated: true, completion: nil)
+
+				alert.textFields?.forEach { field in
+					field.text = ""
+				}
+				present(alert, animated: true, completion: nil)
 			}
 
 			let actionCancel = UIAlertAction(title: "Cancel", style: .destructive)
@@ -150,8 +163,6 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 			alert.addAction(actionCancel)
 
 			present(alert, animated: true, completion: nil)
-		}
-
 	}
 
 	@IBAction func addSkills(_ sender: Any) {
@@ -161,58 +172,81 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-//		if cvFirstNameLabel.text == "First name" || cvLastNameLabel.text == "Last name" {
-//			addJobExpButton.isEnabled = false
-
-//			let actionUnderstood = UIAlertAction(title: "Understood", style: .destructive) {_ in
-//				self.addJobExpButton.isEnabled = true
-//			}
-//
-//			alert.addAction(actionUnderstood)
-//
-//			present(alert, animated: true, completion: nil)
-//
-//		} else {
-
 			alert.addTextField { (textField) in
 				self.skillTextField = textField
-				self.skillTextField.text = self.skillTextField.text?.lowercased()
 
 				if let image = UIImage(named: self.skillTextField.text ?? "") {
 					self.skillImage = image
 				}
 				textField.placeholder = "Write your skill"
 			}
-		
-
 
 			alert.addTextField { (textField) in
 				self.ratingSkillTextField = textField
 				textField.placeholder = "Set your rate for askill"
+			}
 
-				if textField.text != "1" || textField.text != "2" || textField.text != "3" {
-					for action in alert.actions {
-							action.isEnabled = false
-					}
+		let actionAdd = UIAlertAction(title: "Save skill", style: .default) { [self]
+				(action: UIAlertAction!) -> Void in
+
+				if ratingSkillTextField.text == "1" || ratingSkillTextField.text == "2" || ratingSkillTextField.text == "3" {
+
+					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
+					allSkills.append(savedSkill)
+
+//					if let encoded = try? encoder.encode(allSkills) {
+//						let defaults = UserDefaults.standard
+//						defaults.set(encoded, forKey: "jobSkill")
+//					}
+
+					skillsCollectionView.reloadData()
 
 				} else {
-					alert.actions.forEach { action in
-						action.isEnabled = true
+					action.isEnabled = false
+
+					alert.textFields?.forEach { field in
+						field.text = ""
 					}
+
+					action.isEnabled = true
+					present(alert, animated: true, completion: nil)
 				}
+
 			}
 
-			let actionAdd = UIAlertAction(title: "Save skill", style: .default) {
-				(action: UIAlertAction!) -> Void in
-				let savedData = Skills(skillsName: self.skillTextField.text ?? "", rating: Int(self.ratingSkillTextField.text!)!)
-				self.allSkills.append(savedData)
+		let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more skills", style: .default) { [self]
+			(action: UIAlertAction!) -> Void in
 
-				self.skillsCollectionView.reloadData()
+				if ratingSkillTextField.text == "1" || ratingSkillTextField.text == "2" || ratingSkillTextField.text == "3" {
+
+					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
+					allSkills.append(savedSkill)
+
+//					if let encoded = try? encoder.encode(allSkills) {
+//						let defaults = UserDefaults.standard
+//						defaults.set(encoded, forKey: "jobSkill")
+//					}
+
+					skillsCollectionView.reloadData()
+
+					alert.textFields?.forEach { field in
+						field.text = ""
+					}
+					present(alert, animated: true, completion: nil)
+
+				} else {
+					action.isEnabled = false
+
+					alert.textFields?.forEach { field in
+						field.text = ""
+					}
+
+					action.isEnabled = true
+					present(alert, animated: true, completion: nil)
+				}
+
 			}
-			let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more skills", style: .default) {
-				UIAlertAction in
-				NSLog("OK Pressed")
-			}
+
 			let actionCancel = UIAlertAction(title: "Cancel", style: .destructive)
 
 			alert.addAction(actionAdd)
@@ -220,10 +254,17 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 			alert.addAction(actionCancel)
 
 			present(alert, animated: true, completion: nil)
-//		}
 	}
 
 	@IBAction func resetCv(_ sender: Any) {
+
+		UserDefaults.standard.removeObject(forKey: "jobExp")
+//		UserDefaults.standard.removeObject(forKey: "jobSkill")
+
+		loadView()
+		jobExperienceTableView.reloadData()
+//		skillsCollectionView.reloadData()
+
 	}
 
 
@@ -232,7 +273,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 extension CvViewController: UITableViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-		CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height)
+		CGSize(width: 82, height: 142)
 	}
 }
 

@@ -15,7 +15,13 @@ struct Experience: Codable {
 	var positionName: String
 }
 
-struct Skills {
+struct Skills: Codable {
 	var skillsName: String
 	var rating: Int
+}
+
+struct InfoUser: Codable {
+	var firstName: String
+	var lastName: String
+	var userImage: UIImage?
 }
