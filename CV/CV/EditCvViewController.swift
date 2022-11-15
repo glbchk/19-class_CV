@@ -13,11 +13,6 @@ class EditCvViewController: UIViewController {
 	@IBOutlet weak var lastNameTextField: UITextField!
 	@IBOutlet weak var userImage: UIImageView!
 
-	let encoder = JSONEncoder()
-	let decoder = JSONDecoder()
-
-	var cvUserInfo = [InfoUser]()
-
 	override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,7 +33,6 @@ class EditCvViewController: UIViewController {
 		guard let vc = storyboard?.instantiateViewController(withIdentifier: "CvViewController") as? CvViewController else { return }
 
 		vc.loadView()
-		cvUserInfo.append(InfoUser(firstName: firstNameTextField.text ?? "", lastName: lastNameTextField.text ?? "", userImage: userImage.image))
 
 		vc.cvFirstNameLabel.text = firstNameTextField.text ?? ""
 		vc.cvLastNameLabel.text = lastNameTextField.text ?? ""
@@ -46,11 +40,6 @@ class EditCvViewController: UIViewController {
 		vc.cvImage.layer.masksToBounds = false
 		vc.cvImage.layer.cornerRadius = vc.cvImage.frame.height/2
 		vc.cvImage.clipsToBounds = true
-
-		if let encoded = try? encoder.encode(self.cvUserInfo) {
-			let defaults = UserDefaults.standard
-			defaults.set(encoded, forKey: "userInfo")
-		}
 
 		show(vc, sender: nil)
 	}

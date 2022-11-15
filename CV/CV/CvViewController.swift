@@ -31,6 +31,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	var allJobExp = [Experience]()
 	var allSkills = [Skills]()
+	var cvUserInfo = UserInfo()
 
 //	var didSaveButtonTapped: ((String) -> Void)?
 
@@ -56,7 +57,21 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	}
 
+	private func saveProfileData() {
+
+		cvUserInfo = UserInfo(firstName: cvFirstNameLabel.text, lastName: cvLastNameLabel.text, userImage: cvImage.image)
+
+		if let encoded = try? encoder.encode(cvUserInfo) {
+			let defaults = UserDefaults.standard
+			defaults.set(encoded, forKey: "userInfo")
+		}
+
+		UserDefaults.standard.synchronize()
+	}
+
 	private func setData() {
+		saveProfileData()
+
 		if let savedJobExp = UserDefaults.standard.object(forKey: "jobExp") as? Data {
 			if let loadedJobExp = try? decoder.decode([Experience].self, from: savedJobExp) {
 				for exp in loadedJobExp {
@@ -75,21 +90,16 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 //			}
 //		}
 
-		guard let vc = storyboard?.instantiateViewController(withIdentifier: "EditCvViewController") as? EditCvViewController else { return }
-
 		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
-						if let loadedUserInfo = try? decoder.decode([InfoUser].self, from: savedUser) {
-							for info in loadedUserInfo {
-								vc.cvUserInfo.append(info)
-							}
-						}
+			if let loadedUserInfo = try? decoder.decode(UserInfo.self, from: savedUser) {
+				cvUserInfo = loadedUserInfo
 
-						cvImage.layer.masksToBounds = false
-						cvImage.layer.cornerRadius = cvImage.frame.height/2
-						cvImage.clipsToBounds = true
-			
-						loadView()
-					}
+				cvFirstNameLabel.text = cvUserInfo.firstName
+				cvLastNameLabel.text = cvUserInfo.lastName
+				cvImage.image = cvUserInfo.userImage
+			}
+			loadView()
+		}
 
 	}
 
@@ -260,6 +270,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 		UserDefaults.standard.removeObject(forKey: "jobExp")
 //		UserDefaults.standard.removeObject(forKey: "jobSkill")
+//		UserDefaults.standard.removeObject(forKey: "userInfo")
 
 		loadView()
 		jobExperienceTableView.reloadData()
@@ -268,13 +279,6 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	}
 
 
-}
-
-extension CvViewController: UITableViewDelegate {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-		CGSize(width: 82, height: 142)
-	}
 }
 
 extension CvViewController: UITableViewDataSource {
@@ -323,6 +327,10 @@ extension CvViewController: UICollectionViewDataSource {
 		1
 	}
 
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 0
+	}
+
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let collectionCell = collectionView.dequeueReusableCell(
 			withReuseIdentifier: "SkillsCustomCell",
@@ -340,35 +348,10 @@ extension CvViewController: UICollectionViewDataSource {
 
 }
 
-extension CvViewController {
+extension CvViewController: UITableViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-//	func setProperties() {
-//		let encoder = JSONEncoder()
-//		if let encoded = try? encoder.encode(self.allJobExp) {
-//			let defaults = UserDefaults.standard
-//			defaults.set(encoded, forKey: "jobExp")
-//
-//		}
-//
-//	}
-
-//	func retrieveProperties() {
-//		if let savedProperty = UserDefaults.standard.object(forKey: "startDate") as? Data {
-//			let decoder = JSONDecoder()
-//			if let loadedProperty = try? decoder.decode([Experience].self, from: savedProperty) {
-//				for property in loadedProperty {
-//					print(property.startDate ?? "")
-//				}
-//			}
-//			UserDefaults.standard.synchronize()
-//		}
-//	}
-
-//	func removeProperties() -> String {
-//
-////			UserDefaults.standard.removeObject(forKey: "startDate")
-//
-//	}
-
+		CGSize(width: 82, height: 142)
+	}
 }
 

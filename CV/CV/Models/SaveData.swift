@@ -20,8 +20,8 @@ struct Skills: Codable {
 	var rating: Int
 }
 
-struct InfoUser: Codable {
-	var firstName: String
-	var lastName: String
+struct UserInfo: Codable {
+	var firstName: String?
+	var lastName: String?
 	var userImage: UIImage?
 }
