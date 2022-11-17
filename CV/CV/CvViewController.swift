@@ -33,8 +33,6 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	var allSkills = [Skills]()
 	var cvUserInfo = UserInfo()
 
-//	var didSaveButtonTapped: ((String) -> Void)?
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -58,8 +56,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	}
 
 	private func saveProfileData() {
-
-		cvUserInfo = UserInfo(firstName: cvFirstNameLabel.text, lastName: cvLastNameLabel.text, userImage: cvImage.image)
+		cvUserInfo = UserInfo(firstName: cvFirstNameLabel.text, lastName: cvLastNameLabel.text, userImage: UserImage(withImage: cvImage.image))
 
 		if let encoded = try? encoder.encode(cvUserInfo) {
 			let defaults = UserDefaults.standard
@@ -70,7 +67,6 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	}
 
 	private func setData() {
-		saveProfileData()
 
 		if let savedJobExp = UserDefaults.standard.object(forKey: "jobExp") as? Data {
 			if let loadedJobExp = try? decoder.decode([Experience].self, from: savedJobExp) {
@@ -92,11 +88,15 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
 			if let loadedUserInfo = try? decoder.decode(UserInfo.self, from: savedUser) {
-				cvUserInfo = loadedUserInfo
+				if loadedUserInfo.firstName == nil && loadedUserInfo.lastName == nil && loadedUserInfo.userImage == nil {
 
-				cvFirstNameLabel.text = cvUserInfo.firstName
-				cvLastNameLabel.text = cvUserInfo.lastName
-				cvImage.image = cvUserInfo.userImage
+				} else {
+					cvFirstNameLabel.text = loadedUserInfo.firstName
+					cvLastNameLabel.text = loadedUserInfo.lastName
+									if let loadedUserImage = try? decoder.decode(UserImage.self, from: savedUser) {
+										cvImage.image = loadedUserImage.getImage()
+									}
+				}
 			}
 			loadView()
 		}

@@ -34,8 +34,8 @@ class EditCvViewController: UIViewController {
 
 		vc.loadView()
 
-		vc.cvFirstNameLabel.text = firstNameTextField.text ?? ""
-		vc.cvLastNameLabel.text = lastNameTextField.text ?? ""
+		vc.cvFirstNameLabel.text = firstNameTextField.text
+		vc.cvLastNameLabel.text = lastNameTextField.text
 		vc.cvImage.image = userImage.image
 		vc.cvImage.layer.masksToBounds = false
 		vc.cvImage.layer.cornerRadius = vc.cvImage.frame.height/2
