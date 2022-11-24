@@ -51,11 +51,19 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		skillsCollectionView.register(UINib(nibName: "SkillsCollectionViewCell", bundle: nil),
 									  forCellWithReuseIdentifier: "SkillsCustomCell")
 
-		setData()
+		encodeExpData()
+		encodeSkillsData()
+		encodeProfileData()
+
+		cvImage.layer.masksToBounds = false
+		cvImage.layer.cornerRadius = cvImage.frame.height/2
+		cvImage.clipsToBounds = true
+
+		self.jobExperienceTableView.separatorStyle = .none
 
 	}
 
-	private func saveProfileData() {
+	func saveProfileData() {
 		cvUserInfo = UserInfo(firstName: cvFirstNameLabel.text, lastName: cvLastNameLabel.text, userImage: UserImage(withImage: cvImage.image))
 
 		if let encoded = try? encoder.encode(cvUserInfo) {
@@ -66,7 +74,18 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		UserDefaults.standard.synchronize()
 	}
 
-	private func setData() {
+	func encodeProfileData() {
+		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
+			if let loadedUserInfo = try? decoder.decode(UserInfo.self, from: savedUser) {
+				cvFirstNameLabel.text = loadedUserInfo.firstName
+				cvLastNameLabel.text = loadedUserInfo.lastName
+				cvImage.image = loadedUserInfo.userImage?.getImage()
+			}
+		}
+
+	}
+
+	func encodeExpData() {
 
 		if let savedJobExp = UserDefaults.standard.object(forKey: "jobExp") as? Data {
 			if let loadedJobExp = try? decoder.decode([Experience].self, from: savedJobExp) {
@@ -76,32 +95,21 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				jobExperienceTableView.reloadData()
 			}
 		}
+	}
 
-//		if let savedSkill = UserDefaults.standard.object(forKey: "jobSkill") as? Data {
-//			if let loadedSkill = try? decoder.decode([Skills].self, from: savedSkill) {
-//				for skill in loadedSkill {
-//					allSkills.append(skill)
-//				}
-//				skillsCollectionView.reloadData()
-//			}
-//		}
+	func encodeSkillsData() {
 
-		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
-			if let loadedUserInfo = try? decoder.decode(UserInfo.self, from: savedUser) {
-				if loadedUserInfo.firstName == nil && loadedUserInfo.lastName == nil && loadedUserInfo.userImage == nil {
-
-				} else {
-					cvFirstNameLabel.text = loadedUserInfo.firstName
-					cvLastNameLabel.text = loadedUserInfo.lastName
-									if let loadedUserImage = try? decoder.decode(UserImage.self, from: savedUser) {
-										cvImage.image = loadedUserImage.getImage()
-									}
+		if let savedSkill = UserDefaults.standard.object(forKey: "jobSkill") as? Data {
+			if let loadedSkill = try? decoder.decode([Skills].self, from: savedSkill) {
+				for skill in loadedSkill {
+					allSkills.append(skill)
 				}
+				skillsCollectionView.reloadData()
 			}
-			loadView()
 		}
 
 	}
+
 
 	@IBAction func addPorfileData(_ sender: Any) {
 	}
@@ -204,10 +212,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
 					allSkills.append(savedSkill)
 
-//					if let encoded = try? encoder.encode(allSkills) {
-//						let defaults = UserDefaults.standard
-//						defaults.set(encoded, forKey: "jobSkill")
-//					}
+					if let encoded = try? encoder.encode(allSkills) {
+						let defaults = UserDefaults.standard
+						defaults.set(encoded, forKey: "jobSkill")
+					}
 
 					skillsCollectionView.reloadData()
 
@@ -232,10 +240,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
 					allSkills.append(savedSkill)
 
-//					if let encoded = try? encoder.encode(allSkills) {
-//						let defaults = UserDefaults.standard
-//						defaults.set(encoded, forKey: "jobSkill")
-//					}
+					if let encoded = try? encoder.encode(allSkills) {
+						let defaults = UserDefaults.standard
+						defaults.set(encoded, forKey: "jobSkill")
+					}
 
 					skillsCollectionView.reloadData()
 
@@ -269,12 +277,14 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 	@IBAction func resetCv(_ sender: Any) {
 
 		UserDefaults.standard.removeObject(forKey: "jobExp")
-//		UserDefaults.standard.removeObject(forKey: "jobSkill")
-//		UserDefaults.standard.removeObject(forKey: "userInfo")
+		UserDefaults.standard.removeObject(forKey: "jobSkill")
+		UserDefaults.standard.removeObject(forKey: "userInfo")
+
+		UserDefaults.standard.synchronize()
 
 		loadView()
 		jobExperienceTableView.reloadData()
-//		skillsCollectionView.reloadData()
+		skillsCollectionView.reloadData()
 
 	}
 
@@ -291,10 +301,6 @@ extension CvViewController: UITableViewDataSource {
 		return allJobExp.count
 	}
 
-//	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//		<#code#>
-//	}
-
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let tableCell = tableView.dequeueReusableCell(
 			withIdentifier: "JobExperienceTableViewCell",
@@ -309,10 +315,6 @@ extension CvViewController: UITableViewDataSource {
 
 		return tableCell
 	}
-
-//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//	}
 
 }
 
@@ -351,7 +353,8 @@ extension CvViewController: UICollectionViewDataSource {
 extension CvViewController: UITableViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-		CGSize(width: 82, height: 142)
+		CGSize(width: 74, height: 142)
 	}
+
 }
 

@@ -160,7 +160,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-HL-nLT">
                                 <rect key="frame" x="0.0" y="601" width="390" height="243"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bYK-0Q-iOP">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bYK-0Q-iOP">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -216,7 +216,7 @@
         <!--Edit CV-->
         <scene sceneID="gBk-B5-9mh">
             <objects>
-                <viewController storyboardIdentifier="EditCvViewController" id="wQp-FL-96P" customClass="EditCvViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditCvViewController" id="wQp-FL-96P" customClass="EditCvViewController" customModule="CV" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gM4-R1-w17">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -328,7 +328,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Edit CV" id="akz-mm-HPM"/>
                     <connections>
-                        <outlet property="firstNameTextField" destination="5gP-6x-rrg" id="GUd-Uh-jR3"/>
+                        <outlet property="firstNameTextField" destination="5gP-6x-rrg" id="fD9-7L-KMo"/>
                         <outlet property="lastNameTextField" destination="DUv-TZ-Rhp" id="6sD-uh-evt"/>
                         <outlet property="userImage" destination="w12-XP-a2V" id="aYp-DM-u70"/>
                     </connections>
