@@ -54,7 +54,7 @@ class EditCvViewController: UIViewController {
 		vc.cvLastNameLabel.text = lastNameTextField.text
 		vc.cvImage.image = userImage.image
 
-		vc.saveProfileData()
+		vc.encodeProfileData()
 //		vc.encodeProfileData()
 		vc.jobExperienceTableView.reloadData()
 		vc.skillsCollectionView.reloadData()

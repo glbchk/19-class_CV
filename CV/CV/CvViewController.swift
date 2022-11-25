@@ -51,9 +51,9 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		skillsCollectionView.register(UINib(nibName: "SkillsCollectionViewCell", bundle: nil),
 									  forCellWithReuseIdentifier: "SkillsCustomCell")
 
-		encodeExpData()
-		encodeSkillsData()
-		encodeProfileData()
+		decodeProfileData()
+		decodeExpData()
+		decodeSkillsData()
 
 		cvImage.layer.masksToBounds = false
 		cvImage.layer.cornerRadius = cvImage.frame.height/2
@@ -63,7 +63,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	}
 
-	func saveProfileData() {
+	func encodeProfileData() {
 		cvUserInfo = UserInfo(firstName: cvFirstNameLabel.text, lastName: cvLastNameLabel.text, userImage: UserImage(withImage: cvImage.image))
 
 		if let encoded = try? encoder.encode(cvUserInfo) {
@@ -74,7 +74,29 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		UserDefaults.standard.synchronize()
 	}
 
-	func encodeProfileData() {
+	func encodeExpData() {
+
+		if let encoded = try? encoder.encode(allJobExp) {
+			let defaults = UserDefaults.standard
+			defaults.set(encoded, forKey: "jobExp")
+		}
+
+		UserDefaults.standard.synchronize()
+
+	}
+
+	func encodeSkillsData() {
+
+		if let encoded = try? encoder.encode(allSkills) {
+			let defaults = UserDefaults.standard
+			defaults.set(encoded, forKey: "jobSkill")
+		}
+
+		UserDefaults.standard.synchronize()
+
+	}
+
+	func decodeProfileData() {
 		if let savedUser = UserDefaults.standard.object(forKey: "userInfo") as? Data {
 			if let loadedUserInfo = try? decoder.decode(UserInfo.self, from: savedUser) {
 				cvFirstNameLabel.text = loadedUserInfo.firstName
@@ -83,9 +105,11 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 			}
 		}
 
+		UserDefaults.standard.synchronize()
+
 	}
 
-	func encodeExpData() {
+	func decodeExpData() {
 
 		if let savedJobExp = UserDefaults.standard.object(forKey: "jobExp") as? Data {
 			if let loadedJobExp = try? decoder.decode([Experience].self, from: savedJobExp) {
@@ -95,9 +119,12 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				jobExperienceTableView.reloadData()
 			}
 		}
+
+		UserDefaults.standard.synchronize()
+
 	}
 
-	func encodeSkillsData() {
+	func decodeSkillsData() {
 
 		if let savedSkill = UserDefaults.standard.object(forKey: "jobSkill") as? Data {
 			if let loadedSkill = try? decoder.decode([Skills].self, from: savedSkill) {
@@ -107,6 +134,8 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				skillsCollectionView.reloadData()
 			}
 		}
+
+		UserDefaults.standard.synchronize()
 
 	}
 
@@ -145,32 +174,23 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 				(action: UIAlertAction!) -> Void in
 				let savedData = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
 				allJobExp.append(savedData)
-
-				if let encoded = try? encoder.encode(allJobExp) {
-					let defaults = UserDefaults.standard
-					defaults.set(encoded, forKey: "jobExp")
-				}
-
-				UserDefaults.standard.synchronize()
+				encodeExpData()
 
 				jobExperienceTableView.reloadData()
 			}
 
 			let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more experience", style: .default) { [self]
 				(action: UIAlertAction!) -> Void in
-				let savedExp = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
-				allJobExp.append(savedExp)
-
-				if let encoded = try? encoder.encode(allJobExp) {
-					let defaults = UserDefaults.standard
-					defaults.set(encoded, forKey: "jobExp")
-				}
-
-				jobExperienceTableView.reloadData()
-
 				alert.textFields?.forEach { field in
 					field.text = ""
 				}
+
+				let savedExp = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
+				allJobExp.append(savedExp)
+				encodeExpData()
+
+				jobExperienceTableView.reloadData()
+
 				present(alert, animated: true, completion: nil)
 			}
 
@@ -211,11 +231,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
 					allSkills.append(savedSkill)
-
-					if let encoded = try? encoder.encode(allSkills) {
-						let defaults = UserDefaults.standard
-						defaults.set(encoded, forKey: "jobSkill")
-					}
+					encodeSkillsData()
 
 					skillsCollectionView.reloadData()
 
@@ -235,21 +251,18 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more skills", style: .default) { [self]
 			(action: UIAlertAction!) -> Void in
 
+				alert.textFields?.forEach { field in
+					field.text = ""
+				}
+
 				if ratingSkillTextField.text == "1" || ratingSkillTextField.text == "2" || ratingSkillTextField.text == "3" {
 
 					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
 					allSkills.append(savedSkill)
-
-					if let encoded = try? encoder.encode(allSkills) {
-						let defaults = UserDefaults.standard
-						defaults.set(encoded, forKey: "jobSkill")
-					}
+					encodeSkillsData()
 
 					skillsCollectionView.reloadData()
 
-					alert.textFields?.forEach { field in
-						field.text = ""
-					}
 					present(alert, animated: true, completion: nil)
 
 				} else {
@@ -280,12 +293,11 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		UserDefaults.standard.removeObject(forKey: "jobSkill")
 		UserDefaults.standard.removeObject(forKey: "userInfo")
 
-		UserDefaults.standard.synchronize()
+//		UserDefaults.standard.synchronize()
 
-		loadView()
 		jobExperienceTableView.reloadData()
 		skillsCollectionView.reloadData()
-
+		loadView()
 	}
 
 
