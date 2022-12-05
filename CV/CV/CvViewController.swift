@@ -31,7 +31,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	var allJobExp = [Experience]()
 	var allSkills = [Skills]()
-	var cvUserInfo = UserInfo()
+	var cvUserInfo: UserInfo?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -55,11 +55,15 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		decodeExpData()
 		decodeSkillsData()
 
+		self.jobExperienceTableView.separatorStyle = .none
+
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+
 		cvImage.layer.masksToBounds = false
 		cvImage.layer.cornerRadius = cvImage.frame.height/2
 		cvImage.clipsToBounds = true
-
-		self.jobExperienceTableView.separatorStyle = .none
 
 	}
 
@@ -139,6 +143,15 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 	}
 
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+		guard let vc = segue.destination as? EditCvViewController else {
+			return
+		}
+
+		vc.cvViewController = self
+
+	}
 
 	@IBAction func addPorfileData(_ sender: Any) {
 	}
@@ -292,6 +305,10 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		UserDefaults.standard.removeObject(forKey: "jobExp")
 		UserDefaults.standard.removeObject(forKey: "jobSkill")
 		UserDefaults.standard.removeObject(forKey: "userInfo")
+
+		allJobExp.removeAll()
+		allSkills.removeAll()
+		cvUserInfo = nil
 
 //		UserDefaults.standard.synchronize()
 

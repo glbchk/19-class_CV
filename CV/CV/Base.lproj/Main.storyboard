@@ -196,7 +196,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="pencil.line" catalog="system" id="8dg-jJ-Q3U">
                             <connections>
                                 <action selector="addPorfileData:" destination="BYZ-38-t0r" id="i6E-3s-fjh"/>
-                                <segue destination="wQp-FL-96P" kind="show" id="kAg-LC-ouL"/>
+                                <segue destination="wQp-FL-96P" kind="show" identifier="EditViewController" id="kAg-LC-ouL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

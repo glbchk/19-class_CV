@@ -16,7 +16,7 @@ class EditCvViewController: UIViewController {
 //	let encoder = JSONEncoder()
 //	let decoder = JSONDecoder()
 //
-//	var cvUserInfo = UserInfo()
+	var cvViewController: CvViewController?
 
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ class EditCvViewController: UIViewController {
 		userImage.layer.masksToBounds = false
 		userImage.layer.cornerRadius = userImage.frame.height/2
 		userImage.clipsToBounds = true
+
     }
 
 //	func saveProfileData() {
@@ -46,29 +47,15 @@ class EditCvViewController: UIViewController {
 	}
 
 	@IBAction func saveUserData(_ sender: Any) {
-		guard let vc = storyboard?.instantiateViewController(withIdentifier: "CvViewController") as? CvViewController else { return }
 
-		vc.loadView()
+		cvViewController?.cvFirstNameLabel.text = firstNameTextField.text
+		cvViewController?.cvLastNameLabel.text = lastNameTextField.text
+		cvViewController?.cvImage.image = userImage.image
 
-		vc.cvFirstNameLabel.text = firstNameTextField.text
-		vc.cvLastNameLabel.text = lastNameTextField.text
-		vc.cvImage.image = userImage.image
+		cvViewController?.encodeProfileData()
 
-		vc.encodeProfileData()
-//		vc.encodeProfileData()
-		vc.jobExperienceTableView.reloadData()
-		vc.skillsCollectionView.reloadData()
-		show(vc, sender: nil)
+		navigationController?.popViewController(animated: true)
+
 	}
-	
-	/*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
