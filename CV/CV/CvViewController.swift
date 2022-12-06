@@ -194,13 +194,14 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 
 			let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more experience", style: .default) { [self]
 				(action: UIAlertAction!) -> Void in
-				alert.textFields?.forEach { field in
-					field.text = ""
-				}
 
 				let savedExp = Experience(startDate: startDateTextField.text ?? "", endDate: endDateTextField.text ?? "", companyName: companyNameTextField.text ?? "", positionName: positionNameTextField.text ?? "")
 				allJobExp.append(savedExp)
 				encodeExpData()
+
+				alert.textFields?.forEach { field in
+					field.text = ""
+				}
 
 				jobExperienceTableView.reloadData()
 
@@ -264,15 +265,15 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		let actionSaveAndAddMore = UIAlertAction(title: "Save and Add more skills", style: .default) { [self]
 			(action: UIAlertAction!) -> Void in
 
-				alert.textFields?.forEach { field in
-					field.text = ""
-				}
-
 				if ratingSkillTextField.text == "1" || ratingSkillTextField.text == "2" || ratingSkillTextField.text == "3" {
 
 					let savedSkill = Skills(skillsName: skillTextField.text?.lowercased() ?? "", rating: Int(ratingSkillTextField.text!)!)
 					allSkills.append(savedSkill)
 					encodeSkillsData()
+
+					alert.textFields?.forEach { field in
+						field.text = ""
+					}
 
 					skillsCollectionView.reloadData()
 
@@ -310,7 +311,7 @@ class CvViewController: UIViewController, UINavigationControllerDelegate, UIColl
 		allSkills.removeAll()
 		cvUserInfo = nil
 
-//		UserDefaults.standard.synchronize()
+		UserDefaults.standard.synchronize()
 
 		jobExperienceTableView.reloadData()
 		skillsCollectionView.reloadData()
